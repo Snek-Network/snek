@@ -9,6 +9,8 @@ from snek.api import ResponseCodeError
 
 log = logging.getLogger(__name__)
 
+UserObject = t.Union[discord.Member, discord.User, discord.Object]
+
 
 class ProxyUser(Converter):
     """
