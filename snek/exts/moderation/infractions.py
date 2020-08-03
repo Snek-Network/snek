@@ -49,27 +49,27 @@ class Infractions(Cog):
         """Pardons an infraction from a user."""
 
     @command(name='ban')
-    async def apply_ban(self, ctx: Context, user: FetchedMember, reason: t.Optional[str]) -> None:
+    async def apply_ban(self, ctx: Context, user: FetchedMember, *, reason: t.Optional[str]) -> None:
         """Bans an offending member of a guild."""
 
     @command(name='mute')
-    async def apply_mute(self, ctx: Context, user: discord.Member, reason: t.Optional[str]) -> None:
+    async def apply_mute(self, ctx: Context, user: discord.Member, *, reason: t.Optional[str]) -> None:
         """Mutes an offending member of a guild."""
 
     @command(name='kick')
-    async def apply_kick(self, ctx: Context, user: discord.Member, reason: t.Optional[str]) -> None:
+    async def apply_kick(self, ctx: Context, user: discord.Member, *, reason: t.Optional[str]) -> None:
         """Kicks an offending member of a guild."""
 
     @command(name='forcenick', aliases=('nick',))
-    async def apply_nick(self, ctx: Context, user: discord.Member, reason: t.Optional[str]) -> None:
+    async def apply_nick(self, ctx: Context, user: discord.Member, *, reason: t.Optional[str]) -> None:
         """Forces a nickanme on an offending member of a guild."""
 
     @command(name='warn')
-    async def apply_warn(self, ctx: Context, user: discord.Member, reason: t.Optional[str]) -> None:
+    async def apply_warn(self, ctx: Context, user: discord.Member, *, reason: t.Optional[str]) -> None:
         """Warns an offending member of a guild."""
 
     @command(name='note')
-    async def apply_note(self, ctx: Context, user: FetchedMember, reason: str) -> None:
+    async def apply_note(self, ctx: Context, user: FetchedMember, *, reason: str) -> None:
         """Keeps a note on an offending member of a guild."""
         await self.apply_infraction(
             ctx,
@@ -86,13 +86,13 @@ class Infractions(Cog):
         )
 
     @command(aliases=('unban',))
-    async def pardon_ban(self, ctx: Context, user: ProxyUser, reason: t.Optional[str]) -> None:
+    async def pardon_ban(self, ctx: Context, user: ProxyUser, *, reason: t.Optional[str]) -> None:
         """Pardons a ban."""
 
     @command(aliases=('unmute',))
-    async def pardon_mute(self, ctx: Context, user: FetchedMember, reason: t.Optional[str]) -> None:
+    async def pardon_mute(self, ctx: Context, user: FetchedMember, *, reason: t.Optional[str]) -> None:
         """Pardons a mute."""
 
     @command(aliases=('unnick',))
-    async def pardon_nick(self, ctx: Context, user: FetchedMember, reason: t.Optional[str]) -> None:
+    async def pardon_nick(self, ctx: Context, user: FetchedMember, *, reason: t.Optional[str]) -> None:
         """Pardons a forced nickname."""
