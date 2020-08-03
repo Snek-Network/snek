@@ -4,7 +4,6 @@ from datetime import datetime
 import typing as t
 
 import discord
-from discord.ext.commands import Context
 
 from snek.utils import UserObject
 
@@ -40,8 +39,3 @@ class InfractionPayload:
             'actor': self.actor.id,
             'guild': self.guild.id
         }
-
-
-async def post_infraction(ctx: Context, payload: InfractionPayload) -> t.Optional[t.Dict[str, t.Any]]:
-    """Posts an infraction to the Snek API."""
-    return await ctx.bot.api_client.post('infractions', json=payload.to_dict())
