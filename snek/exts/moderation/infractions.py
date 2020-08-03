@@ -7,6 +7,7 @@ import discord
 from discord.ext.commands import Cog, Context, command
 
 from snek.bot import Snek
+from snek.utils import FetchedMember, ProxyUser
 
 
 class Infraction(Enum):
@@ -56,45 +57,37 @@ class Infractions(Cog):
         """Pardons an infraction from a user."""
 
     @command(name='ban')
-    def apply_ban(self, ctx: Context, user: t.Union[discord.Member, discord.User], reason: t.Optional[str]) -> None:
+    def apply_ban(self, ctx: Context, user: FetchedMember, reason: t.Optional[str]) -> None:
         """Bans an offending member of a guild."""
 
     @command(name='mute')
-    def apply_mute(self, ctx: Context, user: t.Union[discord.Member, discord.User], reason: t.Optional[str]) -> None:
+    def apply_mute(self, ctx: Context, user: discord.Member, reason: t.Optional[str]) -> None:
         """Mutes an offending member of a guild."""
 
     @command(name='kick')
-    def apply_kick(self, ctx: Context, user: t.Union[discord.Member, discord.User], reason: t.Optional[str]) -> None:
+    def apply_kick(self, ctx: Context, user: discord.Member, reason: t.Optional[str]) -> None:
         """Kicks an offending member of a guild."""
 
-    @command(name='watchdog', aliases=('watch',))
-    def apply_watch(self, ctx: Context, user: t.Union[discord.Member, discord.User], reason: t.Optional[str]) -> None:
-        """Watches and relays messages of an offending member of a guild."""
-
     @command(name='forcenick', aliases=('nick',))
-    def apply_nick(self, ctx: Context, user: t.Union[discord.Member, discord.User], reason: t.Optional[str]) -> None:
+    def apply_nick(self, ctx: Context, user: discord.Member, reason: t.Optional[str]) -> None:
         """Forces a nickanme on an offending member of a guild."""
 
     @command(name='warn')
-    def apply_warn(self, ctx: Context, user: t.Union[discord.Member, discord.User], reason: str) -> None:
+    def apply_warn(self, ctx: Context, user: discord.Member, reason: t.Optional[str]) -> None:
         """Warns an offending member of a guild."""
 
     @command(name='note')
-    def apply_note(self, ctx: Context, user: t.Union[discord.Member, discord.User], reason: str) -> None:
+    def apply_note(self, ctx: Context, user: FetchedMember, reason: str) -> None:
         """Keeps a note on an offending member of a guild."""
 
     @command(aliases=('unban',))
-    def pardon_ban(self, ctx: Context, user: discord.User, reason: t.Optional[str]) -> None:
+    def pardon_ban(self, ctx: Context, user: ProxyUser, reason: t.Optional[str]) -> None:
         """Pardons a ban."""
 
     @command(aliases=('unmute',))
-    def pardon_mute(self, ctx: Context, user: discord.User, reason: t.Optional[str]) -> None:
+    def pardon_mute(self, ctx: Context, user: FetchedMember, reason: t.Optional[str]) -> None:
         """Pardons a mute."""
 
-    @command(aliases=('unwatch',))
-    def pardon_watch(self, ctx: Context, user: discord.User, reason: t.Optional[str]) -> None:
-        """Pardons a watch."""
-
     @command(aliases=('unnick',))
-    def pardon_nick(self, ctx: Context, user: discord.User, reason: t.Optional[str]) -> None:
+    def pardon_nick(self, ctx: Context, user: FetchedMember, reason: t.Optional[str]) -> None:
         """Pardons a forced nickname."""
