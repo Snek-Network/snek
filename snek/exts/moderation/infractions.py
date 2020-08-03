@@ -32,7 +32,7 @@ class Infractions(Cog):
 
         infractions = await self.bot.api_client.get(
             'infractions',
-            params={'user__id': payload.user.id, 'hidden': 0}
+            params={'user__id': payload.user.id, 'hidden': 'false'}
         )
 
         if (infr_amt := len(infractions)) > 0:
