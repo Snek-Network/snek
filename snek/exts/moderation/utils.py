@@ -19,6 +19,7 @@ async def post_infraction(
     payload = {
         'user': user.id,
         'actor': ctx.author.id,
+        'type': infr_type,
         'reason': reason,
         'hidden': hidden,
         'active': active
