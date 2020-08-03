@@ -29,13 +29,21 @@ class InfractionPayload:
     user: UserObject
     actor: UserObject
     guild: discord.Guild
+    active: bool = True,
+    hidden: bool = False
 
     def to_dict(self) -> InfractionPayloadDict:
-        return {
-            'type': self.type.name,
+        payload = {
+            'type': self.type.name.lower(),
             'reason': self.reason,
-            'expires_at': self.expires_at.isoformat(),
             'user': self.user.id,
             'actor': self.actor.id,
-            'guild': self.guild.id
+            'guild': self.guild.id,
+            'active': int(self.active),
+            'hidden': int(self.hidden)
         }
+
+        if self.expires_at is not None:
+            payload['expires_at'] = self.expires_at.isoformat()
+
+        return payload
