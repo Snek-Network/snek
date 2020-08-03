@@ -7,7 +7,7 @@ import discord
 from discord.ext.commands import Cog, Context, command
 
 from snek.bot import Snek
-from snek.utils import FetchedMember, ProxyUser
+from snek.utils import FetchedMember, ProxyUser, UserObject
 
 
 class Infraction(Enum):
@@ -53,7 +53,7 @@ class Infractions(Cog):
     def apply_infraction(self, ctx: Context, payload: InfractionPayload) -> None:
         """Applies an infraction to an offending member."""
 
-    def pardon_infraction(self, ctx: Context, infr_type: Infraction, user):
+    def pardon_infraction(self, ctx: Context, infr_type: Infraction, user: UserObject):
         """Pardons an infraction from a user."""
 
     @command(name='ban')
