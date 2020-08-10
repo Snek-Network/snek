@@ -55,7 +55,7 @@ class InfractionPayload:
 
 async def send_infraction(payload: InfractionPayload) -> bool:
     """
-    Sends informaiton about an infraction to a user via DMs and returns
+    Sends information about an infraction to a user via DMs and returns
     a boolean showing whether or not the DM was successful.
 
     True -> Successful
