@@ -83,7 +83,7 @@ async def send_infraction(payload: InfractionPayload) -> bool:
         embed.add_field(name='Expires At', value=duration)
 
     if (reason := payload.reason) is not None:
-        embed.add_field(name='Reason', value=reason, inline=False)
+        embed.description = f'**Reason**\n{reason}'
 
     log.trace(f'Sending an infraction notification to user {payload.user.id} from guild {payload.guild.id}.')
     return await send_private_embed(payload.user, embed)
