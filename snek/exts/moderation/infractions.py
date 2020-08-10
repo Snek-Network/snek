@@ -139,15 +139,15 @@ class Infractions(Cog):
             )
         )
 
-    @command(aliases=('unban',))
+    @command(name=('unban',))
     async def pardon_ban(self, ctx: Context, user: ProxyUser, *, reason: t.Optional[str]) -> None:
         """Pardons a ban."""
 
-    @command(aliases=('unmute',))
+    @command(name=('unmute',))
     async def pardon_mute(self, ctx: Context, user: FetchedMember, *, reason: t.Optional[str]) -> None:
         """Pardons a mute."""
 
-    @command(aliases=('unnick',))
+    @command(name=('unnick',))
     async def pardon_nick(self, ctx: Context, user: FetchedMember, *, reason: t.Optional[str]) -> None:
         """Pardons a forced nickname."""
 
