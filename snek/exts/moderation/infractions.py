@@ -21,17 +21,39 @@ class Infractions(Cog):
     def __init__(self, bot: Snek) -> None:
         self.bot = bot
 
-    async def apply_infraction(self, ctx: Context, payload: InfractionPayload) -> None:
+    async def apply_infraction(
+        self,
+        ctx: Context,
+        payload: InfractionPayload,
+        *,
+        action: t.Optional[t.Coroutine] = None
+    ) -> None:
         """Applies an infraction to an offending member."""
         infr_type = payload.type.name.lower()
         log.trace(f'Applying {infr_type} to user {payload.user.id} in guild {payload.guild.id}.')
 
+        log.trace('Posting infraction to Snek API..')
         resp = await ctx.bot.api_client.post('infractions', json=payload.to_dict())
 
         dm_emoji = ''
         if not payload.hidden:
             notified = await send_infraction(payload)
             dm_emoji = '📬 ' if notified else '📭 '
+
+        if action is not None:
+            try:
+                log.trace('Attempting to await infraction action..')
+                await action
+            except Exception as err:
+                log.error(
+                    f'Failed to apply infraction #{resp["id"]} ({infr_type}) '
+                    f'to user {payload.user.id} in guild {payload.guild.id}.',
+                    exc_info=err
+                )
+                await ctx.bot.api_client.delete(f'infractions/{resp["id"]}')
+
+                await ctx.send('❌ Failed to apply infraction.')
+                return
 
         msg = f'{dm_emoji}👌 Applied {infr_type} to {payload.user.mention}.'
 
@@ -64,6 +86,20 @@ class Infractions(Cog):
     @command(name='kick')
     async def apply_kick(self, ctx: Context, user: discord.Member, *, reason: t.Optional[str]) -> None:
         """Kicks an offending member of a guild."""
+        await self.apply_infraction(
+            ctx,
+            InfractionPayload(
+                type=Infraction.KICK,
+                reason=reason,
+                expires_at=None,
+                user=user,
+                actor=ctx.author,
+                guild=ctx.guild,
+                active=False,
+                hidden=False
+            ),
+            action=user.kick(reason=reason)
+        )
 
     @command(name='forcenick', aliases=('nick',))
     async def apply_nick(self, ctx: Context, user: discord.Member, *, reason: t.Optional[str]) -> None:
