@@ -7,7 +7,7 @@ from discord.ext.commands import Cog, Context, command
 from snek.bot import Snek
 from snek.utils import FetchedMember, ProxyUser, UserObject
 
-from snek.exts.moderation.utils import Infraction, InfractionPayload
+from snek.exts.moderation.utils import Infraction, InfractionPayload, send_infraction
 
 log = logging.getLogger(__name__)
 
@@ -26,9 +26,14 @@ class Infractions(Cog):
         infr_type = payload.type.name.lower()
         log.trace(f'Applying {infr_type} to user {payload.user.id} in guild {payload.guild.id}.')
 
-        msg = f'👌 Applied {infr_type} to {payload.user.mention}.'
-
         resp = await ctx.bot.api_client.post('infractions', json=payload.to_dict())
+
+        dm_emoji = ''
+        if not payload.hidden:
+            notified = await send_infraction(payload)
+            dm_emoji = '📬 ' if notified else '📭 '
+
+        msg = f'{dm_emoji}👌 Applied {infr_type} to {payload.user.mention}.'
 
         infractions = await self.bot.api_client.get(
             'infractions',
@@ -40,7 +45,7 @@ class Infractions(Cog):
 
         await ctx.send(msg)
 
-        log.trace(
+        log.debug(
             f'Applied infraction #{resp["id"]} ({infr_type}) to '
             f'user {payload.user.id} in guild {payload.guild.id}.'
         )
