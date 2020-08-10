@@ -150,3 +150,6 @@ class Infractions(Cog):
     @command(aliases=('unnick',))
     async def pardon_nick(self, ctx: Context, user: FetchedMember, *, reason: t.Optional[str]) -> None:
         """Pardons a forced nickname."""
+
+    def cog_check(self, ctx: Context) -> bool:
+        return discord.utils.get(ctx.author.roles, id=self.bot.configs[ctx.guild.id]['mod_role'])
