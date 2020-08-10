@@ -67,7 +67,7 @@ class Infractions(Cog):
 
     @command(name='forcenick', aliases=('nick',))
     async def apply_nick(self, ctx: Context, user: discord.Member, *, reason: t.Optional[str]) -> None:
-        """Forces a nickanme on an offending member of a guild."""
+        """Forces a nickname on an offending member of a guild."""
 
     @command(name='warn')
     async def apply_warn(self, ctx: Context, user: discord.Member, *, reason: t.Optional[str]) -> None:
