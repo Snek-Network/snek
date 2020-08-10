@@ -72,6 +72,19 @@ class Infractions(Cog):
     @command(name='warn')
     async def apply_warn(self, ctx: Context, user: discord.Member, *, reason: t.Optional[str]) -> None:
         """Warns an offending member of a guild."""
+        await self.apply_infraction(
+            ctx,
+            InfractionPayload(
+                type=Infraction.WARNING,
+                reason=reason,
+                expires_at=None,
+                user=user,
+                actor=ctx.author,
+                guild=ctx.guild,
+                active=False,
+                hidden=False
+            )
+        )
 
     @command(name='note')
     async def apply_note(self, ctx: Context, user: FetchedMember, *, reason: str) -> None:
