@@ -68,7 +68,11 @@ class Config(Cog):
     @config_group.command(name='reset', aliases=('r',))
     async def reset_command(self, ctx: Context, key: str) -> None:
         """Reset the value of `key` in a guild's config."""
-        if (value := CONFIG_DEFAULTS.get(key)) is not None:
+        try:
+            value = CONFIG_DEFAULTS[key]
+        except KeyError:
+            await ctx.send('❌ There is no such config key.')
+        else:
             await self.bot.api_client.patch(
                 f'guild_configs/{ctx.guild.id}',
                 json={key: value}
@@ -76,8 +80,6 @@ class Config(Cog):
             self.bot.configs[ctx.guild.id][key] = value
 
             await ctx.send(f'✅ Config key `{key}` was sucessfully reset to `{value}`')
-        else:
-            await ctx.send('❌ There is no such config key.')
 
     def cog_check(self, ctx: Context) -> bool:
         """Only administrators can use this cog."""
