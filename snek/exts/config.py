@@ -57,9 +57,12 @@ class Config(Cog):
     @config_group.command(name='get', aliases=('g',))
     async def get_command(self, ctx: Context, key: str) -> None:
         """Get the value of `key` from a guild's config."""
-        if (value := self.bot.configs[ctx.guild.id].get(key)) is not None:
-            await ctx.send(f'The value of `{key}` is {value}')
-        else:
+        try:
+            if (value := self.bot.configs[ctx.guild.id][key]) is not None:
+                await ctx.send(f'The value of `{key}` is {value}')
+            else:
+                await ctx.send(f'There is no set value for `{key}`.')
+        except KeyError:
             await ctx.send('❌ There is no such config key.')
 
     @config_group.command(name='reset', aliases=('r',))
