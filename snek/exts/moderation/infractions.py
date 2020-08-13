@@ -78,6 +78,20 @@ class Infractions(Cog):
     @command(name='ban')
     async def apply_ban(self, ctx: Context, user: FetchedMember, *, reason: t.Optional[str]) -> None:
         """Bans an offending member of a guild."""
+        await self.apply_infraction(
+            ctx,
+            InfractionPayload(
+                type=Infraction.BAN,
+                reason=reason,
+                expires_at=None,
+                user=user,
+                actor=ctx.author,
+                guild=ctx.guild,
+                active=True,
+                hidden=False
+            ),
+            action=user.ban(reason=reason)
+        )
 
     @command(name='mute')
     async def apply_mute(self, ctx: Context, user: discord.Member, *, reason: t.Optional[str]) -> None:
