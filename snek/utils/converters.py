@@ -40,7 +40,6 @@ class ProxyUser(Converter):
         else:
             user.display_name = user_info['name']
             user.discriminator = user_info['discriminator']
-            user.created_at = user_info['created_at']
             user.avatar_url = user_info['avatar_url']
 
         return user
