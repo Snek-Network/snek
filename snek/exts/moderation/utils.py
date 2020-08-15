@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from enum import Enum, auto
 from dataclasses import dataclass
 from datetime import datetime
@@ -5,9 +7,10 @@ import logging
 import typing as t
 
 import discord
+from discord.ext.commands import Context
 import humanize
 
-from snek.utils import UserObject
+from snek.utils import ProxyUser, UserObject
 
 log = logging.getLogger(__name__)
 
@@ -43,14 +46,33 @@ class InfractionPayload:
             'user': self.user.id,
             'actor': self.actor.id,
             'guild': self.guild.id,
-            'active': int(self.active),
-            'hidden': int(self.hidden)
+            'active': self.active,
+            'hidden': self.hidden
         }
 
         if self.expires_at is not None:
             payload['expires_at'] = self.expires_at.isoformat()
 
         return payload
+
+    @classmethod
+    def from_dict(cls, ctx: Context, payload: InfractionPayloadDict) -> InfractionPayload:
+
+        def get_user(user_id: int) -> UserObject:
+            return ctx.guild.get_member(user_id) or ProxyUser().convert(ctx, user_id)
+
+        self = cls(
+            type=Infraction(payload['type']),
+            reason=payload['reason'],
+            expires_at=datetime.fromisoformat(payload['expires_at']) if payload['expires_at'] else None,
+            user=get_user(payload['user']),
+            actor=get_user(payload['actor']),
+            guild=ctx.bot.get_guild(payload['guild']),
+            active=payload['active'],
+            hidden=payload['hidden']
+        )
+
+        return self
 
 
 async def send_infraction(payload: InfractionPayload) -> bool:
