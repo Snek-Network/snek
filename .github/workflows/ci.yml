@@ -1,0 +1,42 @@
+name: Lint, Build, Push, and Deploy
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Install dependencies
+      run: |
+        pip install pipenv
+        pipenv install --dev --deploy --system
+
+    - name: Lint with flake8
+      run: |
+        flake8 .
+
+    - name: Build and Push Docker image
+      uses: docker/build-push-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
+        repository: ${{ github.repository }}
+        tag_with_sha: true
+        tag_with_ref: true
+        push: ${{ success() && github.ref == 'refs/heads/master'}}
+
+    - name: Deployment
+      uses: distributhor/workflow-webhook@v1
+      with:
+        webhook_url: ${{ secrets.DEPLOYMENT_WEBHOOK }}
+        webhook_auth: ${{ secrets.DEPLOYMENT_AUTH }}
+        webhook_secret: ${{ secrets.WEBHOOK_SECRET }}
