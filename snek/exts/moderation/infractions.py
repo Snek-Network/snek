@@ -216,6 +216,13 @@ class Infractions(Cog):
     @command(name='unban')
     async def pardon_ban(self, ctx: Context, user: ProxyUser, *, reason: t.Optional[str]) -> None:
         """Pardons a ban."""
+        await self.pardon_infraction(
+            ctx,
+            infr_type=Infraction.BAN,
+            user=user,
+            reason=reason,
+            action=ctx.guild.unban(user, reason=reason)
+        )
 
     @command(name='unmute')
     async def pardon_mute(self, ctx: Context, user: FetchedMember, *, reason: t.Optional[str]) -> None:
