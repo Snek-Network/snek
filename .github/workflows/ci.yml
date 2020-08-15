@@ -30,7 +30,7 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
-        repository: ${{ github.repository }}
+        repository: sneknetwork/snek
         tag_with_sha: true
         tag_with_ref: true
 
