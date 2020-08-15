@@ -150,7 +150,7 @@ class Infractions(Cog):
                 active=True,
                 hidden=False
             ),
-            action=user.ban(reason=reason)
+            action=ctx.guild.ban(user, reason=reason)
         )
 
     @command(name='mute')
@@ -172,7 +172,7 @@ class Infractions(Cog):
                 active=False,
                 hidden=False
             ),
-            action=user.kick(reason=reason)
+            action=ctx.guild.kick(user, reason=reason)
         )
 
     @command(name='forcenick', aliases=('nick',))
