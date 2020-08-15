@@ -25,6 +25,7 @@ jobs:
         flake8 .
 
     - name: Build and Push Docker image
+      if: success() && github.ref == 'refs/heads/master'
       uses: docker/build-push-action@v1
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -32,9 +33,9 @@ jobs:
         repository: ${{ github.repository }}
         tag_with_sha: true
         tag_with_ref: true
-        push: ${{ success() && github.ref == 'refs/heads/master'}}
 
     - name: Deployment
+      if: success() && github.ref == 'refs/heads/master'
       uses: distributhor/workflow-webhook@v1
       with:
         webhook_url: ${{ secrets.DEPLOYMENT_WEBHOOK }}
