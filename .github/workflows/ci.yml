@@ -37,7 +37,7 @@ jobs:
     - name: Deployment
       if: success() && github.ref == 'refs/heads/master'
       uses: distributhor/workflow-webhook@v1
-      with:
+      env:
         webhook_url: ${{ secrets.DEPLOYMENT_WEBHOOK }}
         webhook_auth: ${{ secrets.DEPLOYMENT_AUTH }}
         webhook_secret: ${{ secrets.WEBHOOK_SECRET }}
