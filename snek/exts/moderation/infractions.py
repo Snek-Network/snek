@@ -7,7 +7,7 @@ from discord.ext.commands import Cog, Context, command
 from snek.bot import Snek
 from snek.utils import FetchedMember, ProxyUser, UserObject
 
-from snek.exts.moderation.utils import Infraction, InfractionPayload, send_infraction
+from snek.exts.moderation.utils import Infraction, InfractionPayload, send_infraction, send_pardon
 
 log = logging.getLogger(__name__)
 
@@ -72,8 +72,68 @@ class Infractions(Cog):
             f'user {payload.user.id} in guild {payload.guild.id}.'
         )
 
-    async def pardon_infraction(self, ctx: Context, infr_type: Infraction, user: UserObject):
+    async def pardon_infraction(
+        self,
+        ctx: Context,
+        infr_type: Infraction,
+        user: UserObject,
+        reason: t.Optional[str],
+        *,
+        action: t.Coroutine
+    ) -> None:
         """Pardons an infraction from a user."""
+        infr_type = infr_type.name.lower()
+        log.trace(f'Pardoning {infr_type} for user {user.id} in guild {ctx.guild.id}.')
+
+        log.trace(
+            f'Getting active {infr_type}s for user {user.id} in guild {ctx.guild.id} from Snek API..'
+        )
+        infractions = await self.bot.api_client.get(
+            'infractions',
+            params={
+                'active': 'true',
+                'type': infr_type,
+                'user__id': user.id,
+                'guild__id': ctx.guild.id
+            }
+        )
+
+        if not infractions:
+            log.debug(f'No active {infr_type}s found for user {user.id} in guild {ctx.guild.id}.')
+            await ctx.send(f'❌ There are no active infraction for {user.mention}.')
+            return
+
+        payload = await InfractionPayload.from_dict(ctx, infractions[0])
+
+        try:
+            log.trace('Attempting to await infraction pardon action..')
+            await action
+        except Exception as err:
+            log.error(
+                f'Failed to pardon infraction #{payload.id} ({infr_type}) '
+                f'to user {user.id} in guild {ctx.guild.id}.',
+                exc_info=err
+            )
+
+            await ctx.send('❌ Failed to pardon infraction.')
+            return
+
+        await self.bot.api_client.patch(
+            f'infractions/{payload.id}',
+            json={'active': False}
+        )
+
+        dm_emoji = ''
+        if payload.type != Infraction.BAN:
+            notified = await send_pardon(payload)
+            dm_emoji = '📬 ' if notified else '📭 '
+
+        await ctx.send(f'{dm_emoji}👌 Pardoned {infr_type} for {payload.user.mention}.')
+
+        log.debug(
+            f'Pardoned infraction #{payload.id} ({infr_type}) for '
+            f'user {payload.user.id} in guild {payload.guild.id}.'
+        )
 
     @command(name='ban')
     async def apply_ban(self, ctx: Context, user: FetchedMember, *, reason: t.Optional[str]) -> None:
