@@ -146,6 +146,9 @@ class Information(Cog):
             elif activity_obj.type is discord.ActivityType.playing:
                 activity = f'Playing {activity_obj.name}'
 
+            elif activity_obj.type is discord.ActivityType.watching:
+                activity = f'Watching {activity_obj.name}'
+
             elif activity_obj.type is discord.ActivityType.listening:
                 BAR_LENGTH = 30
 
