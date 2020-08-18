@@ -250,22 +250,21 @@ class Infractions(Cog):
         )
 
     @command(name='unban')
-    async def pardon_ban(self, ctx: Context, user: ProxyUser, *, reason: t.Optional[str]) -> None:
+    async def pardon_ban(self, ctx: Context, user: ProxyUser) -> None:
         """Pardons a ban."""
         await self.pardon_infraction(
             ctx,
             infr_type=Infraction.BAN,
             user=user,
-            reason=reason,
-            action=ctx.guild.unban(user, reason=reason)
+            action=ctx.guild.unban(user)
         )
 
     @command(name='unmute')
-    async def pardon_mute(self, ctx: Context, user: FetchedMember, *, reason: t.Optional[str]) -> None:
+    async def pardon_mute(self, ctx: Context, user: FetchedMember) -> None:
         """Pardons a mute."""
 
     @command(name='unnick')
-    async def pardon_nick(self, ctx: Context, user: FetchedMember, *, reason: t.Optional[str]) -> None:
+    async def pardon_nick(self, ctx: Context, user: FetchedMember) -> None:
         """Pardons a forced nickname."""
 
     def cog_check(self, ctx: Context) -> bool:
