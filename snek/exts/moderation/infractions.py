@@ -153,6 +153,24 @@ class Infractions(Cog):
             action=ctx.guild.ban(user, reason=reason)
         )
 
+    @command(name='shadowban', aliases=('sban',))
+    async def apply_shadow_ban(self, ctx: Context, user: FetchedMember, *, reason: t.Optional[str]) -> None:
+        """Bans an offending member of a guild."""
+        await self.apply_infraction(
+            ctx,
+            InfractionPayload(
+                type=Infraction.BAN,
+                reason=reason,
+                expires_at=None,
+                user=user,
+                actor=ctx.author,
+                guild=ctx.guild,
+                active=True,
+                hidden=True
+            ),
+            action=ctx.guild.ban(user, reason=reason)
+        )
+
     @command(name='mute')
     async def apply_mute(self, ctx: Context, user: discord.Member, *, reason: t.Optional[str]) -> None:
         """Mutes an offending member of a guild."""
@@ -171,6 +189,24 @@ class Infractions(Cog):
                 guild=ctx.guild,
                 active=False,
                 hidden=False
+            ),
+            action=ctx.guild.kick(user, reason=reason)
+        )
+
+    @command(name='shadowkick', aliases=('skick',))
+    async def apply_shadow_kick(self, ctx: Context, user: FetchedMember, *, reason: t.Optional[str]) -> None:
+        """Bans an offending member of a guild."""
+        await self.apply_infraction(
+            ctx,
+            InfractionPayload(
+                type=Infraction.KICK,
+                reason=reason,
+                expires_at=None,
+                user=user,
+                actor=ctx.author,
+                guild=ctx.guild,
+                active=False,
+                hidden=True
             ),
             action=ctx.guild.kick(user, reason=reason)
         )
