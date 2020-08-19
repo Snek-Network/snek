@@ -14,7 +14,8 @@ snek = Snek(
     command_prefix=when_mentioned_or('!'),
     activity=discord.Activity(name='over everyone.', type=discord.ActivityType.watching),
     case_insensitive=True,
-    max_messages=10_000
+    max_messages=10_000,
+    allowed_mentions=discord.AllowedMentions(everyone=False)
 )
 
 # Ignore bots
