@@ -1,3 +1,4 @@
+import contextlib
 import json
 import typing as t
 from pathlib import Path
@@ -128,14 +129,10 @@ class Randomization(Cog):
     @staticmethod
     async def _get_discord_message(ctx: Context, text: str) -> t.Union[Message, str]:
         """Converts a message ID, link, or message to a message object or a string."""
-        try:
+        with contextlib.suppress(BadArgument):
             text = await MessageConverter().convert(ctx, text)
 
-        except BadArgument:
-            pass
-
-        finally:
-            return text
+        return text
 
     @staticmethod
     def _convert_embed(func: t.Callable, embed: Embed) -> Embed:
