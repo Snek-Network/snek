@@ -65,7 +65,7 @@ class Randomization(Cog):
 
         await ctx.send(content=converted_text, embed=embed)
 
-    @command(name='sarcasm')
+    @command(name='randomcase', aliases=('sarcasm',))
     async def random_case(self, ctx: Context, *, msg: str) -> None:
         """Randomizes the casing of each character in a message/embed."""
         def func(string: str) -> str:
@@ -85,7 +85,7 @@ class Randomization(Cog):
 
         await ctx.send(content=converted_text, embed=embed)
 
-    @command(aliases=['roll', 'dice'])
+    @command(aliases=('roll', 'dice'))
     async def roll_dice(self, ctx: Context, amount: int = 1) -> None:
         """Rolls a die an amount of times."""
         if amount < 1 or amount > 10:
@@ -102,12 +102,12 @@ class Randomization(Cog):
             f'Average: `{avg if amount != 1 else "Obvious"}`.'
         ))
 
-    @command(aliases=['coin', 'flip'])
+    @command(aliases=('coin', 'flip'))
     async def flip_coin(self, ctx: Context) -> None:
         """Flips a two-sided coin for the user."""
         await ctx.send(f'Tossed a coin to your Witcher. Landed `{choice(["heads", "tails"])}` facing up.')
 
-    @command(name='8ball', aliases=['magicball'])
+    @command(name='8ball', aliases=('magicball',))
     async def magic_8_ball(self, ctx: Context) -> None:
         """Answers come to the user from the magic 8 ball."""
         key = choice(list(MAGICBALL.keys()))
