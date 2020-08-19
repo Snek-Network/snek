@@ -36,6 +36,7 @@ class Randomization(Cog):
 
     @command(name='uwu')
     async def uwu_case(self, ctx: Context, *, msg: str) -> None:
+        """Replaces items in message/embed with strings from `UWU` constant, while adding stutter."""
         def func(string: str, stutter_rate: float = 0.1) -> str:
             def _stutter(word: str) -> str:
                 while random() < stutter_rate:
@@ -66,6 +67,7 @@ class Randomization(Cog):
 
     @command(name='sarcasm')
     async def random_case(self, ctx: Context, *, msg: str) -> None:
+        """Randomizes the casing of each character in a message/embed."""
         def func(string: str) -> str:
             return ''.join(c.upper() if randint(0, 1) else c for c in string.lower())
 
