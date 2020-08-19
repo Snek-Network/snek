@@ -137,7 +137,8 @@ class Randomization(Cog):
         except BadArgument:
             pass
 
-        return text
+        finally:
+            return text
 
     @staticmethod
     def _convert_embed(func: Callable, embed: Embed) -> Embed:
