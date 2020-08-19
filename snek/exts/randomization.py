@@ -51,11 +51,11 @@ class Randomization(Cog):
             # Add stutter
             return ' '.join(map(_stutter, string.split(' ')))
 
-        msg, embed = await Randomization._get_text_and_embed(ctx, msg)
+        msg, embed = await self._get_text_and_embed(ctx, msg)
 
         # Convert embed if it exists
         if embed is not None:
-            embed = Randomization._convert_embed(func, embed)
+            embed = self._convert_embed(func, embed)
 
         converted_text = func(msg)
 
@@ -71,11 +71,11 @@ class Randomization(Cog):
         def func(string: str) -> str:
             return ''.join(c.upper() if randint(0, 1) else c for c in string.lower())
 
-        msg, embed = await Randomization._get_text_and_embed(ctx, msg)
+        msg, embed = await self._get_text_and_embed(ctx, msg)
 
         # Convert embed if it exists
         if embed is not None:
-            embed = Randomization._convert_embed(func, embed)
+            embed = self._convert_embed(func, embed)
 
         converted_text = func(msg)
 
@@ -114,7 +114,7 @@ class Randomization(Cog):
         await ctx.send(f'`{key}`: {choice(MAGICBALL[key])}')
 
     @staticmethod
-    async def _get_text_and_embed(ctx: Context, text: str) -> t.Tuple[str, t.Union[Embed, None]]:
+    async def _get_text_and_embed(ctx: Context, text: str) -> t.Tuple[str, t.Optional[Embed]]:
         """Gets the text and embed from a possible link to a discord Message object."""
         embed = None
         message = await Randomization._get_discord_message(ctx, text)
