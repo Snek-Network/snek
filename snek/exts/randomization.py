@@ -36,7 +36,7 @@ class Randomization(Cog):
 
     @command(name='uwu')
     async def uwu_case(self, ctx: Context, *, msg: str) -> None:
-        """Replaces items in message/embed with strings from `UWU` constant, while adding stutter."""
+        """Uwuifies and adds stutter to strings in a message/embed."""
         def func(string: str, stutter_rate: float = 0.1) -> str:
             def _stutter(word: str) -> str:
                 while random() < stutter_rate:
@@ -107,7 +107,7 @@ class Randomization(Cog):
         """Flips a two-sided coin for the user."""
         await ctx.send(f'Tossed a coin to your Witcher. Landed `{choice(["heads", "tails"])}` facing up.')
 
-    @command(name='8ball', aliases=('magicball',))
+    @command(name='8ball', aliases=('magic8ball',))
     async def magic_8_ball(self, ctx: Context) -> None:
         """Answers come to the user from the magic 8 ball."""
         key = choice(list(MAGICBALL.keys()))
