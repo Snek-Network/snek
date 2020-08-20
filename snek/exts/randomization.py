@@ -89,7 +89,7 @@ class Randomization(Cog):
     async def roll_dice(self, ctx: Context, amount: int = 1) -> None:
         """Rolls a die an amount of times."""
         if amount < 1 or amount > 10:
-            return await ctx.send(':x: Input must be between 1 and 10.')
+            return await ctx.send('❌ Input must be between 1 and 10.')
 
         dice = [randint(1, 6) for _ in range(amount)]
         avg = round(sum(dice) / amount, 2)
