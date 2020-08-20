@@ -85,7 +85,7 @@ class Randomization(Cog):
 
         await ctx.send(content=converted_text, embed=embed)
 
-    @command(aliases=('roll', 'dice'))
+    @command(name='diceroll', aliases=('roll', 'dice'))
     async def roll_dice(self, ctx: Context, amount: int = 1) -> None:
         """Rolls a die an amount of times."""
         if amount < 1 or amount > 10:
@@ -102,7 +102,7 @@ class Randomization(Cog):
             f'Average: `{avg if amount != 1 else "Obvious"}`.'
         ))
 
-    @command(aliases=('coin', 'flip'))
+    @command(name='coinflip', aliases=('coin', 'flip', 'cf'))
     async def flip_coin(self, ctx: Context) -> None:
         """Flips a two-sided coin for the user."""
         await ctx.send(f'Tossed a coin to your Witcher. Landed `{choice(["heads", "tails"])}` facing up.')
@@ -151,6 +151,9 @@ class Randomization(Cog):
             for field in embed_dict['fields']:
                 field['name'] = func(field.get('name', ''))
                 field['value'] = func(field.get('value', ''))
+
+        if 'author' in embed_dict:
+            embed_dict['author']['name'] = func(embed_dict['author'].get('name', ))
 
         return Embed.from_dict(embed_dict)
 
