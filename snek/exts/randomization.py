@@ -113,11 +113,11 @@ class Randomization(Cog):
         key = choice(list(MAGICBALL.keys()))
         await ctx.send(f'`{key}`: {choice(MAGICBALL[key])}')
 
-    @staticmethod
-    async def _get_text_and_embed(ctx: Context, text: str) -> t.Tuple[str, t.Optional[Embed]]:
+    @classmethod
+    async def _get_text_and_embed(cls, ctx: Context, text: str) -> t.Tuple[str, t.Optional[Embed]]:
         """Gets the text and embed from a possible link to a discord Message object."""
         embed = None
-        message = await Randomization._get_discord_message(ctx, text)
+        message = await cls._get_discord_message(ctx, text)
 
         if isinstance(message, Message):
             text = message.content
