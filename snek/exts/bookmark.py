@@ -27,6 +27,10 @@ class Bookmark(Cog):
             value=f'[Jump to original message]({message.jump_url})'
         )
 
+        embed.set_thumbnail(
+            url='https://cdn.iconscout.com/icon/free/png-32/bookmark-1754138-1493251.png'
+        )
+
         try:
             await ctx.author.send(embed=embed)
         except discord.Forbidden:
