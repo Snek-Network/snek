@@ -31,6 +31,13 @@ class Bookmark(Cog):
             url='https://cdn.iconscout.com/icon/free/png-32/bookmark-1754138-1493251.png'
         )
 
+        for a in message.attachments:
+            if a.height is None or a.width is None:
+                continue
+
+            embed.set_image(url=a.url)
+            break
+
         try:
             await ctx.author.send(embed=embed)
         except discord.Forbidden:
