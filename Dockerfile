@@ -10,9 +10,6 @@ ENV PIP_NO_CACHE_DIR=false \
 WORKDIR /bot
 COPY . .
 
-
-RUN apt update -y && apt install -y git
-
 # Use pipenv version 2018.11.26 to avoid errors
 RUN pip install -U "pipenv==2018.11.26" && pipenv install --system --deploy
 
