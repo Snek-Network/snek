@@ -32,10 +32,12 @@ class Bookmark(Cog):
             value=f'[Jump to original message]({message.jump_url})'
         )
 
+        # Add a small bookmark thumbnail
         embed.set_thumbnail(
             url='https://cdn.iconscout.com/icon/free/png-32/bookmark-1754138-1493251.png'
         )
 
+        # Attach an image/video if one exists
         for a in message.attachments:
             if a.height is None or a.width is None:
                 continue
