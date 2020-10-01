@@ -8,13 +8,13 @@ flake8 = "~=3.8.3"
 pre-commit = "~=2.6.0"
 
 [packages]
-discord-py = "~=1.4.1"
+arrow = "~=0.16.0"
+discord-py = "~=1.5.0"
 coloredlogs = "~=14.0"
 colorama = {version = "~=0.4.3",sys_platform = "== 'win32'"}
-fuzzywuzzy = "0.18.0"
-humanize = {git = "https://github.com/jmoiron/humanize.git",ref = "15ecb0a778b38925bf8188bd1ca6be95b54ed1cc"}
-python-dateutil = "*"
-arrow = "*"
+fuzzywuzzy = "~=0.18.0"
+humanize = "~=3.0.0"
+python-dateutil = "~=2.8.0"
 
 [requires]
 python_version = "3.8"
