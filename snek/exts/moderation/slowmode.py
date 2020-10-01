@@ -92,4 +92,3 @@ class Slowmode(Cog):
 def setup(bot: Snek) -> None:
     """Load the Slowmode cog."""
     bot.add_cog(Slowmode(bot))
-

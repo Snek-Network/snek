@@ -6,7 +6,7 @@ from discord.ext.commands import BadArgument, Context, Converter
 
 class DurationDelta(Converter):
     """Convert duration strings into dateutil.relativedelta.relativedelta objects.
-    
+
     MIT License
 
     Copyright (c) 2018 Python Discord
@@ -61,4 +61,3 @@ class DurationDelta(Converter):
         delta = relativedelta(**duration_dict)
 
         return delta
-
