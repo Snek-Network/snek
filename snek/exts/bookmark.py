@@ -13,6 +13,11 @@ class Bookmark(Cog):
     @command(aliases=('bm',))
     async def bookmark(self, ctx: Context, message: discord.Message, *, title: str = '') -> None:
         """Bookmark a message to your DMs."""
+        perms = message.channel.permissions_for(ctx.author)
+        if not perms.read_messages:
+            await ctx.message.add_reaction('❌')
+            return
+
         embed = discord.Embed(
             title=title or "Bookmark",
             color=discord.Color.blurple(),
