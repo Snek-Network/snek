@@ -3,6 +3,8 @@ from discord.ext.commands import Cog, Context, command
 
 from snek.bot import Snek
 
+BOOKMARK_THUMBNAIL_URL = 'https://cdn.iconscout.com/icon/free/png-32/bookmark-1754138-1493251.png'
+
 
 class Bookmark(Cog):
     """Bookmark and save messages."""
@@ -33,9 +35,7 @@ class Bookmark(Cog):
         )
 
         # Add a small bookmark thumbnail
-        embed.set_thumbnail(
-            url='https://cdn.iconscout.com/icon/free/png-32/bookmark-1754138-1493251.png'
-        )
+        embed.set_thumbnail(url=BOOKMARK_THUMBNAIL_URL)
 
         # Attach an image/video if one exists
         for a in message.attachments:
