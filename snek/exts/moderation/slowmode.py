@@ -87,8 +87,3 @@ class Slowmode(Cog):
     async def cog_check(self, ctx: Context) -> bool:
         """Only allow moderators to invoke the commands in this cog."""
         return discord.utils.get(ctx.author.roles, id=self.bot.configs[ctx.guild.id]['mod_role'])
-
-
-def setup(bot: Snek) -> None:
-    """Load the Slowmode cog."""
-    bot.add_cog(Slowmode(bot))
