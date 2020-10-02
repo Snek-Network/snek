@@ -52,10 +52,10 @@ This is what's currently planned for Snek.
         - [ ] Silence
         - [ ] Unsilence
 
-    - [ ] Slowmode Cog
-        - [ ] Get
-        - [ ] Set
-        - [ ] Reset
+    - [x] Slowmode Cog
+        - [x] Get
+        - [x] Set
+        - [x] Reset
 
     - [ ] Filters Cog
         - [ ] Offensive language
@@ -95,7 +95,7 @@ This is what's currently planned for Snek.
     - [ ] Delete
     - [ ] List
 
-- [ ] Bookmark Extension/Cog
+- [x] Bookmark Extension/Cog
     - Takes a message ID and DMs it to the invoker
 
 - [ ] Tags Extension/Cog (Each user has their own tags per guild)
